@@ -8,6 +8,7 @@ async function start() {
   const app = await NestFactory.create(AppModule, {
     logger: ["debug", "error", "warn"],
   });
+  app.enableCors();
   app.setGlobalPrefix("/api");
   app.useGlobalPipes(
     new ValidationPipe({
