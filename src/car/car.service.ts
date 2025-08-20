@@ -42,7 +42,7 @@ export class CarService {
 
   async remove(id: number) {
     const car = await this.findOne(id);
-    await this.carRepo.remove(car!);
+    await this.carRepo.remove(car);
 
     return new BaseOkResponse(
       200,

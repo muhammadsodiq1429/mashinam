@@ -2,7 +2,7 @@ export class BaseOkResponse {
   constructor(
     public statusCode: number,
     public message: string,
-    data: any,
+    data: Object,
     dataName: string
   ) {
     this[dataName] = data;
