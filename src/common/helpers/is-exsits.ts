@@ -1,4 +1,4 @@
-import { Repository, ObjectLiteral } from "typeorm";
+import { ObjectLiteral, Repository } from "typeorm";
 
 export const checkUniqueFields = async <T extends ObjectLiteral>(
   repo: Repository<T>,

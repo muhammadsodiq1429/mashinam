@@ -3,6 +3,7 @@ import { Column, Entity } from "typeorm";
 import { BaseEntity } from "../../common/base-entity";
 import { UserGender } from "../../common/enums/user-gender";
 import { ApiProperty } from "@nestjs/swagger";
+import * as uuid from "uuid";
 
 @Entity()
 export class User extends BaseEntity {
@@ -56,4 +57,13 @@ export class User extends BaseEntity {
   })
   @Column({ enum: UserGender })
   gender: UserGender;
+
+  @ApiProperty({
+    type: "boolean",
+    example: false,
+    default: false,
+    description: "Foydalanuvchining faolligi",
+  })
+  @Column({ default: false })
+  is_active: boolean;
 }

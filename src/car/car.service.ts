@@ -19,6 +19,7 @@ export class CarService {
 
   async findOne(id: number) {
     const car = await this.carRepo.findOneBy({ id });
+
     if (!car) {
       throw new NotFoundException(`Car not found with ID ${id}`);
     }

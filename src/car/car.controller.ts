@@ -7,12 +7,14 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  UseGuards,
 } from "@nestjs/common";
 import { CarService } from "./car.service";
 import { CreateCarDto } from "./dto/create-car.dto";
 import { UpdateCarDto } from "./dto/update-car.dto";
 import { ApiOperation, ApiResponse } from "@nestjs/swagger";
 import { Car } from "./entities/car.entity";
+import { UserGuard } from "../common/guards/user.guard";
 
 @Controller("car")
 export class CarController {
@@ -24,6 +26,7 @@ export class CarController {
     type: Car,
     description: "The new car added successfully",
   })
+  @UseGuards(UserGuard)
   @Post()
   create(@Body() createCarDto: CreateCarDto) {
     return this.carService.create(createCarDto);

@@ -60,14 +60,14 @@ export class CreateUserDto {
   @IsStrongPassword()
   password: string;
 
-  @ApiProperty({
-    type: "string",
-    example: "A3l1i2M-a8h7m-u7d7",
-    description: "Foydalanuvchining tasdiqlovchi paroli",
-  })
-  @IsString()
-  @IsNotEmpty()
-  confirm_password: string;
+  // @ApiProperty({
+  //   type: "string",
+  //   example: "A3l1i2M-a8h7m-u7d7",
+  //   description: "Foydalanuvchining tasdiqlovchi paroli",
+  // })
+  // @IsString()
+  // @IsNotEmpty()
+  // confirm_password: string;
 
   @ApiProperty({
     type: "string",

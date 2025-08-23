@@ -6,12 +6,15 @@ import {
   Patch,
   Param,
   Delete,
+  HttpCode,
 } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { ApiOperation, ApiResponse } from "@nestjs/swagger";
 import { User } from "./entities/user.entity";
+import { VerifyOtpDto } from "./dto/verify-otp.dto";
+import { NewOtpDto } from "./dto/new-otp.dto";
 
 @Controller("user")
 export class UserController {
@@ -26,6 +29,28 @@ export class UserController {
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
+  }
+
+  @ApiOperation({ summary: "To create a new otp for user" })
+  @ApiResponse({
+    status: 200,
+    description: "🎉OTP emailga yuborildi",
+  })
+  // @HttpCode(200)
+  @Post("new-otp")
+  newOtp(@Body() newOtpDto: NewOtpDto) {
+    return this.userService.newOtp(newOtpDto);
+  }
+
+  @ApiOperation({ summary: "To verify user's otp" })
+  @ApiResponse({
+    status: 200,
+    description: "🎉 Tabriklayman, siz active bo'ldingiz",
+  })
+  // @HttpCode(200)
+  @Post("verify-otp")
+  verifyOtp(@Body() verifyOtpDto: VerifyOtpDto) {
+    return this.userService.verifyOtp(verifyOtpDto);
   }
 
   @ApiOperation({ summary: "To get all users" })

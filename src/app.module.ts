@@ -3,6 +3,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
 import { CarModule } from "./car/car.module";
 import { UserModule } from "./user/user.module";
+import { AuthModule } from "./auth/auth.module";
 
 @Module({
   imports: [
@@ -12,9 +13,11 @@ import { UserModule } from "./user/user.module";
       autoLoadEntities: true,
       synchronize: true,
       url: process.env.DATABASE_URL,
+      
     }),
     CarModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
