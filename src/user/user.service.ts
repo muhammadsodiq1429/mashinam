@@ -139,7 +139,17 @@ export class UserService {
   }
 
   findAll() {
-    return this.userRepo.find();
+    return this.userRepo.find({
+      select: {
+        email: true,
+        full_name: true,
+        gender: true,
+        id: true,
+        is_active: true,
+        phone_number: true,
+        username: true,
+      },
+    });
   }
 
   async activeUser({ id }: ActiveUserDto) {
