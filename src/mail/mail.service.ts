@@ -1,24 +1,24 @@
-import { MailerService } from "@nestjs-modules/mailer";
-import { Injectable } from "@nestjs/common";
-import { User } from "../user/entities/user.entity";
-import { CreateUserDto } from "../user/dto/create-user.dto";
-import { Sign } from "crypto";
+import { ServiceUnavailableException } from "@nestjs/common";
+import { Resend } from "resend";
 
-@Injectable()
-export class MailService {
-  constructor(private readonly mailerService: MailerService) {}
+const resend = new Resend("re_hgS5ob5a_aFs5sqGGZ65yjoAWAn6hDHkU");
 
-  async sendMail(user: { email: string; full_name: string; otp: string }) {
-    console.log(user.full_name);
-    await this.mailerService.sendMail({
-      to: user.email,
-      subject: "Welcome to Mashinam app",
-      template: "./confirmation",
-      context: {
-        name: user.full_name,
-        otp: user.otp,
-        year: new Date().getFullYear(),
-      },
-    });
+export const sendmail = async (user: {
+  email: string;
+  full_name: string;
+  otp: string;
+}) => {
+  const { data, error } = await resend.emails.send({
+    to: user.email,
+    subject: "Welcome to Mashinam app",
+    html: `<h3>Your otp: ${user.otp}</h3>`,
+    from: "muhammadsodiqmuhammadjanov@gmail.com",
+  });
+
+  if (error) {
+    console.error({ error });
+    throw new ServiceUnavailableException(error);
   }
-}
+
+  console.log({ data });
+};

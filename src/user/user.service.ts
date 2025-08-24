@@ -13,19 +13,18 @@ import { User } from "./entities/user.entity";
 import { Repository } from "typeorm";
 import { BaseOkResponse } from "../common/response/200/base-ok-response";
 import { checkUniqueFields } from "../common/helpers/is-exsits";
-import { MailService } from "../mail/mail.service";
 import { Otp } from "./entities/otp.entity";
 import { decode, encode } from "../common/helpers/crypto";
 import * as otpGenerator from "otp-generator";
 import { addMinutesToDate } from "../common/helpers/addMinutes";
 import { VerifyOtpDto } from "./dto/verify-otp.dto";
 import { ActiveUserDto } from "./dto/user-active.dto";
+import { sendmail } from "../mail/mail.service";
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private userRepo: Repository<User>,
-    @InjectRepository(Otp) private otpRepo: Repository<Otp>,
-    private readonly mailService: MailService
+    @InjectRepository(Otp) private otpRepo: Repository<Otp>
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -47,7 +46,7 @@ export class UserService {
       throw new ConflictException(errors);
     }
 
-    const otp = await this.newOtp({ email, full_name });
+    // const otp = await this.newOtp({ email, full_name });
 
     const hashedPassword = await bcrypt.hash(password, 7);
     const newUser = await this.userRepo.save({
@@ -58,8 +57,10 @@ export class UserService {
     return new BaseOkResponse(
       201,
       "New user created successfully",
-      { newUser, otp },
-      "data"
+      // { newUser, otp },
+      // "data"
+      newUser,
+      "newUser"
     );
   }
 
@@ -89,7 +90,7 @@ export class UserService {
     const encodedData = await encode(JSON.stringify(details));
     console.log(full_name);
     try {
-      await this.mailService.sendMail({ email, full_name, otp });
+      await sendmail({ email, full_name, otp });
     } catch (error) {
       console.log(error);
       throw new ServiceUnavailableException(

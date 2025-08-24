@@ -29,6 +29,7 @@
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/swagger": "^11.2.0",
     "@nestjs/typeorm": "^11.0.0",
+    "@sendgrid/mail": "^8.1.5",
     "@types/otp-generator": "^4.0.2",
     "axios": "^1.9.0",
     "bcrypt": "^6.0.0",
@@ -39,6 +40,7 @@
     "otp-generator": "^4.0.1",
     "pg": "^8.16.3",
     "reflect-metadata": "^0.2.2",
+    "resend": "^6.0.1",
     "rxjs": "^7.8.1",
     "typeorm": "^0.3.25",
     "uuid": "^11.1.0"
